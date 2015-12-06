@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class MoveWithPoints : MonoBehaviour
 {
@@ -8,27 +9,55 @@ public class MoveWithPoints : MonoBehaviour
     public GameObject starPrefab;
     Transform star = null;
 
-    void changePoints(List<Vector3> newPoints)
+    float screenLeft, screenRight, screenTop, screenBottom;
+
+    public GameObject otherStarMaker;
+    void addPoint(Vector2 point)
+    {
+        points.Add(point);
+    }
+    void ereaseStar()
     {
         if (star != null)
-            Destroy(star.gameObject);
+            StartCoroutine(destoryAfter02Sce(star.gameObject));
         star = null;
         points.Clear();
         step = 0;
-        offPos = Vector3.zero;
         //reset
-
-        foreach (Vector3 p in newPoints)
-            points.Add(p);
-
+        otherStarMaker.SendMessage("initStars");
+    }
+    IEnumerator destoryAfter02Sce(GameObject obj)
+    {
+        yield return new WaitForSeconds(0.2f);
+        if (obj != null)
+            Destroy(obj);
+    }
+    void makeStar(Vector2 pos)
+    {
         GameObject starObj = GameObject.Instantiate<GameObject>(starPrefab);
         star = starObj.transform;
         star.parent = transform;
-        star.position = points[0];
+        star.position = pos;
+    }
+    void flip()
+    {
+        for (int i = 0; i < points.Count - 1; ++i)
+        {
+            points[i] = new Vector2(-points[i].x, points[i].y);
+        }
     }
 
     int step;
-    Vector2 offPos;
+    void Start()
+    {
+        Vector2 b_l = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 10)),
+            t_r = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 10));
+        screenLeft = b_l.x;
+        screenBottom = b_l.y;
+        screenRight = t_r.x;
+        screenTop = t_r.y;
+        timeFlipStart = DateTime.Now;
+    }
     void Update()
     {
         if (star != null)
@@ -36,13 +65,27 @@ public class MoveWithPoints : MonoBehaviour
             if (++step >= points.Count)
             {
                 step = 0;
-                offPos = points[points.Count - 1] - points[0];
             }
-            points[step] += offPos;
+            star.Translate(points[step]);
+        }
+    }
+    DateTime timeFlipStart;
+    void LateUpdate()
+    {
+        if (star != null)
+        {
             //碰到两边反弹
-            if(points[step].x>=Screen.width)
-
-            star.position = points[step];
+            if (star.position.x >= screenRight || star.position.x <= screenLeft)
+            {
+                double timeFlip = (DateTime.Now - timeFlipStart).TotalMilliseconds;
+                timeFlipStart = DateTime.Now;
+                if (timeFlip > 100)
+                    flip();
+            }
+            if (star.position.y >= screenTop || star.position.y <= screenBottom)
+            {
+                ereaseStar();
+            }
         }
     }
 }

@@ -2,30 +2,36 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TouchController : MonoBehaviour {
+public class TouchController : MonoBehaviour
+{
 
-    List<Vector3> touchPoints=new List<Vector3>();
     public Camera mainCamera;
     public Transform starMaker;
+    bool isTouching;
+
+    Vector3 oldPoint;
+    void Start()
+    {
+        isTouching = false;
+    }
 
     void OnMouseDown()
     {
-        touchPoints.Clear();
-        touchPoints.Add(mainCamera.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10));
+        oldPoint = mainCamera.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10);
+        starMaker.gameObject.SendMessage("ereaseStar");
+        StartCoroutine(pauseOneSec(oldPoint));
     }
 
     void OnMouseDrag()
     {
-        touchPoints.Add(mainCamera.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10));
+        Vector3 newPoint = mainCamera.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10);
+        starMaker.gameObject.SendMessage("addPoint", (Vector2)(newPoint - oldPoint));
+        oldPoint = newPoint;
     }
-    IEnumerator pauseOneSec()
+    IEnumerator pauseOneSec(Vector2 pos)
     {
-        yield return new WaitForSeconds(1);
-        starMaker.gameObject.SendMessage("changePoints", touchPoints);
+        yield return new WaitForSeconds(0.3f);
+        starMaker.gameObject.SendMessage("makeStar", (Vector2)pos);
     }
 
-    void OnMouseUp()
-    {
-        starMaker.gameObject.SendMessage("changePoints", touchPoints);
-    }
 }
