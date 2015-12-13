@@ -3,10 +3,8 @@ using System.Collections;
 
 public class OtherStar : MonoBehaviour
 {
-
     void Start()
     {
-
     }
 
     void OnTriggerEnter(Collider other)

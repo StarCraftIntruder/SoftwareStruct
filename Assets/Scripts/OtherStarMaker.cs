@@ -43,6 +43,7 @@ public class OtherStarMaker : MonoBehaviour
 
     int card;
     Transform otherStars, blackHoles;
+    GameObject starMaker;
     void Start()
     {
         card = PlayerPrefs.GetInt("card", -1);
@@ -53,6 +54,9 @@ public class OtherStarMaker : MonoBehaviour
         }
         otherStars = transform.FindChild("otherStars");
         blackHoles = transform.FindChild("blackHoles");
+
+        starMaker = GameObject.Find("starMaker");
+
         initStars();
     }
 
@@ -84,7 +88,7 @@ public class OtherStarMaker : MonoBehaviour
             print("win");
             card++;
             if (card < 3)
-                initStars();
+                starMaker.SendMessage("ereaseStar");
         }
     }
     void Update()

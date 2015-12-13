@@ -11,7 +11,7 @@ public class MoveWithPoints : MonoBehaviour
 
     float screenLeft, screenRight, screenTop, screenBottom;
 
-    public GameObject otherStarMaker;
+    GameObject otherStarMaker;
     void addPoint(Vector2 point)
     {
         points.Add(point);
@@ -41,7 +41,7 @@ public class MoveWithPoints : MonoBehaviour
     }
     void flip()
     {
-        for (int i = 0; i < points.Count - 1; ++i)
+        for (int i = 0; i < points.Count; ++i)
         {
             points[i] = new Vector2(-points[i].x, points[i].y);
         }
@@ -50,6 +50,8 @@ public class MoveWithPoints : MonoBehaviour
     int step;
     void Start()
     {
+        otherStarMaker = GameObject.Find("otherStarMaker");
+
         Vector2 b_l = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 10)),
             t_r = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 10));
         screenLeft = b_l.x;

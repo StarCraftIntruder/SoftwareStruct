@@ -4,34 +4,40 @@ using System.Collections.Generic;
 
 public class TouchController : MonoBehaviour
 {
-
-    public Camera mainCamera;
-    public Transform starMaker;
+    GameObject starMaker;
     bool isTouching;
 
     Vector3 oldPoint;
     void Start()
     {
         isTouching = false;
+        starMaker = GameObject.Find("starMaker");
     }
 
     void OnMouseDown()
     {
-        oldPoint = mainCamera.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10);
-        starMaker.gameObject.SendMessage("ereaseStar");
+        oldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10);
+        starMaker.SendMessage("ereaseStar");
         StartCoroutine(pauseOneSec(oldPoint));
+        isTouching = true;
     }
 
     void OnMouseDrag()
     {
-        Vector3 newPoint = mainCamera.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10);
-        starMaker.gameObject.SendMessage("addPoint", (Vector2)(newPoint - oldPoint));
-        oldPoint = newPoint;
+        if (isTouching)
+        {
+            Vector3 newPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10);
+            starMaker.SendMessage("addPoint", (Vector2)(newPoint - oldPoint));
+            oldPoint = newPoint;
+        }
+    }
+    void OnMouseExit()
+    {
+        isTouching = false;
     }
     IEnumerator pauseOneSec(Vector2 pos)
     {
         yield return new WaitForSeconds(0.3f);
-        starMaker.gameObject.SendMessage("makeStar", (Vector2)pos);
+        starMaker.SendMessage("makeStar", (Vector2)pos);
     }
-
 }
