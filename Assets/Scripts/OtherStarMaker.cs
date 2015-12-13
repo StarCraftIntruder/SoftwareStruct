@@ -52,6 +52,10 @@ public class OtherStarMaker : MonoBehaviour
             card = 0;
             PlayerPrefs.SetInt("card", card);//读取关卡
         }
+
+        if (card > 2)
+            print("通关了");
+
         otherStars = transform.FindChild("otherStars");
         blackHoles = transform.FindChild("blackHoles");
 
@@ -62,17 +66,16 @@ public class OtherStarMaker : MonoBehaviour
 
     void initStars()
     {
-        foreach (Transform t in otherStars.GetComponentsInChildren<Transform>())
+        foreach (Transform t in otherStars.GetComponentsInChildren<Transform>(true))
         {
             if (t != otherStars)
                 Destroy(t.gameObject);
         }
-        foreach (Transform t in blackHoles.GetComponentsInChildren<Transform>())
+        foreach (Transform t in blackHoles.GetComponentsInChildren<Transform>(true))
         {
             if (t != blackHoles)
                 Destroy(t.gameObject);
         }
-
         foreach (var info in starsInit[card])
         {
             GameObject g = Object.Instantiate<GameObject>(starPrefabs[(int)info.type]);
@@ -81,14 +84,35 @@ public class OtherStarMaker : MonoBehaviour
             t.position = info.pos;
         }
     }
+    void resetStars()
+    {
+        foreach (Transform t in otherStars.GetComponentsInChildren<Transform>(true))
+        {
+            if (t != otherStars)
+                t.gameObject.SetActive(true);
+        }
+        foreach (Transform t in blackHoles.GetComponentsInChildren<Transform>(true))
+        {
+            if (t != blackHoles)
+                t.gameObject.SetActive(true);
+        }
+    }
     void checkIsWin()
     {
-        if (otherStars.childCount == 1)
+        int childCount = -1;
+        foreach (Transform t in otherStars.GetComponentsInChildren<Transform>(false))
         {
-            print("win");
+                childCount++;
+        }
+        if (childCount < 1)
+        {
+            //PlayerPrefs.SetInt("card", ++card);
             card++;
             if (card < 3)
+            {
+                initStars();
                 starMaker.SendMessage("ereaseStar");
+            }
         }
     }
     void Update()

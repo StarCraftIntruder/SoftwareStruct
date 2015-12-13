@@ -24,7 +24,7 @@ public class MoveWithPoints : MonoBehaviour
         points.Clear();
         step = 0;
         //reset
-        otherStarMaker.SendMessage("initStars");
+        otherStarMaker.SendMessage("resetStars");
     }
     IEnumerator destoryAfter02Sce(GameObject obj)
     {
@@ -39,6 +39,13 @@ public class MoveWithPoints : MonoBehaviour
         star.parent = transform;
         star.position = pos;
     }
+    //void activeCollider()
+    //{
+    //    if (star != null)
+    //    {
+    //        star.GetComponent<Collider>().enabled = true;
+    //    }
+    //}
     void flip()
     {
         for (int i = 0; i < points.Count; ++i)
@@ -62,7 +69,7 @@ public class MoveWithPoints : MonoBehaviour
     }
     void Update()
     {
-        if (star != null)
+        if (star != null && points.Count > 0)
         {
             if (++step >= points.Count)
             {

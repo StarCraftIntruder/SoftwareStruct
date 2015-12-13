@@ -11,9 +11,8 @@ public class OtherStar : MonoBehaviour
     {
         if (other.tag == "MyStar")
         {
-            GameObject g = transform.parent.parent.gameObject;
-            Destroy(gameObject);
-            g.SendMessage("checkIsWin");
+            gameObject.SetActive(false);
+            transform.parent.parent.gameObject.SendMessage("checkIsWin");
         }
     }
 
