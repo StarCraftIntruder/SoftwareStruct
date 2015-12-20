@@ -5,10 +5,12 @@ using System.Collections.Generic;
 public class OtherStarMaker : MonoBehaviour
 {
     public GameObject[] starPrefabs;
+    int need = 2;//表示小于need的是需要消灭的
     enum STAR_TYPE
     {
+        Blue,//普通星球
+        Red,//弹跳星球
         Hole,//黑洞
-        Blue
     };
     struct StarInfo
     {
@@ -35,9 +37,11 @@ public class OtherStarMaker : MonoBehaviour
         #endregion
 
         #region 第三关数据
-        starsInit[2].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Blue });
-        starsInit[2].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Blue });
-        starsInit[2].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Hole });
+        starsInit[2].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Red });
+        starsInit[2].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Red });
+        //starsInit[2].Add(new StarInfo { pos = new Vector2(0, 2), type = STAR_TYPE.Blue });
+        starsInit[2].Add(new StarInfo { pos = new Vector2(0, -2), type = STAR_TYPE.Blue });
+        //starsInit[2].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Hole });
         #endregion
     }
 
@@ -66,6 +70,7 @@ public class OtherStarMaker : MonoBehaviour
 
     void initStars()
     {
+        //otherStars、blackHoles分别代表需要消灭和不需要消灭的东西(典型代表是黑洞）
         foreach (Transform t in otherStars.GetComponentsInChildren<Transform>(true))
         {
             if (t != otherStars)
@@ -80,7 +85,7 @@ public class OtherStarMaker : MonoBehaviour
         {
             GameObject g = Object.Instantiate<GameObject>(starPrefabs[(int)info.type]);
             Transform t = g.transform;
-            t.parent = info.type == STAR_TYPE.Hole ? blackHoles : otherStars;
+            t.parent = (int)info.type < 2 ? otherStars : blackHoles;
             t.position = info.pos;
         }
     }
@@ -89,7 +94,10 @@ public class OtherStarMaker : MonoBehaviour
         foreach (Transform t in otherStars.GetComponentsInChildren<Transform>(true))
         {
             if (t != otherStars)
+            {
                 t.gameObject.SetActive(true);
+                t.gameObject.SendMessage("reset");
+            }
         }
         foreach (Transform t in blackHoles.GetComponentsInChildren<Transform>(true))
         {
@@ -102,7 +110,7 @@ public class OtherStarMaker : MonoBehaviour
         int childCount = -1;
         foreach (Transform t in otherStars.GetComponentsInChildren<Transform>(false))
         {
-                childCount++;
+            childCount++;
         }
         if (childCount < 1)
         {
@@ -114,9 +122,5 @@ public class OtherStarMaker : MonoBehaviour
                 starMaker.SendMessage("ereaseStars");
             }
         }
-    }
-    void Update()
-    {
-
     }
 }

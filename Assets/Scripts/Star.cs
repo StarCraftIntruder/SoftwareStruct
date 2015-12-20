@@ -7,11 +7,21 @@ public class Star : MonoBehaviour
 {
     List<Vector2> points ;
     float screenLeft, screenRight, screenTop, screenBottom;
-    void flip()
+    void flip(bool y)
     {
-        for (int i = 0; i < points.Count; ++i)
+        if (y)
         {
-            points[i] = new Vector2(-points[i].x, points[i].y);
+            for (int i = 0; i < points.Count; ++i)
+            {
+                points[i] = -points[i];
+            }
+        }
+        else
+        {
+            for (int i = 0; i < points.Count; ++i)
+            {
+                points[i] = new Vector2(-points[i].x, points[i].y);
+            }
         }
     }
     void setPoints(List<Vector2> points)
@@ -38,6 +48,7 @@ public class Star : MonoBehaviour
         StartCoroutine(destoryAfter02Sce());
         points.Clear();
         step = 0;
+        transform.parent.gameObject.SendMessage("ereaseStars",gameObject);
     }
     IEnumerator destoryAfter02Sce()
     {
@@ -64,11 +75,11 @@ public class Star : MonoBehaviour
             double timeFlip = (DateTime.Now - timeFlipStart).TotalMilliseconds;
             timeFlipStart = DateTime.Now;
             if (timeFlip > 100)
-                flip();
+                flip(false);
         }
         if (transform.position.y > screenTop || transform.position.y < screenBottom)
         {
-            transform.parent.gameObject.SendMessage("ereaseStars");
+            ereaseStar();
         }
     }
 }

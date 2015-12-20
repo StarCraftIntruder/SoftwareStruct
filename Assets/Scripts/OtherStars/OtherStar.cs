@@ -3,10 +3,7 @@ using System.Collections;
 
 public class OtherStar : MonoBehaviour
 {
-    void Start()
-    {
-    }
-
+    void reset() {}
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "MyStar")
@@ -14,10 +11,5 @@ public class OtherStar : MonoBehaviour
             gameObject.SetActive(false);
             transform.parent.parent.gameObject.SendMessage("checkIsWin");
         }
-    }
-
-    void Update()
-    {
-        //自转啥的
     }
 }

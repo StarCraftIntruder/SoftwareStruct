@@ -28,7 +28,8 @@ public class StarMaker : MonoBehaviour
     {
         if (stars.Contains(ob))
             stars.Remove(ob);
-        ob.SendMessage("ereaseStar");
+        if (stars.Count == 0)
+            otherStarMaker.SendMessage("resetStars");
     }
     void ereaseStars()
     {
