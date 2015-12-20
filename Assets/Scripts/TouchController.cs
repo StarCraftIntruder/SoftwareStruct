@@ -20,7 +20,7 @@ public class TouchController : MonoBehaviour
     {
         oldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10);
         firstPoint = oldPoint;
-        starMaker.SendMessage("ereaseStar");
+        starMaker.SendMessage("ereaseStars");
         StartCoroutine(pauseOneSec(oldPoint));
         isTouching = true;
         maxDis = 0;
@@ -43,7 +43,7 @@ public class TouchController : MonoBehaviour
     {
         isTouching = false;
         if (maxDis < 1f)//如果滑动距离太小，则移除
-            starMaker.SendMessage("ereaseStar");
+            starMaker.SendMessage("ereaseStars");
     }
     IEnumerator pauseOneSec(Vector2 pos)
     {

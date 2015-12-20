@@ -111,7 +111,7 @@ public class OtherStarMaker : MonoBehaviour
             if (card < 3)
             {
                 initStars();
-                starMaker.SendMessage("ereaseStar");
+                starMaker.SendMessage("ereaseStars");
             }
         }
     }

@@ -58,16 +58,23 @@
     <Reference Include="UnityEngine.Analytics">
       <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\BlackHole.cs" />
-    <Compile Include="Assets\Scripts\MoveWithPoints.cs" />
     <Compile Include="Assets\Scripts\OtherStar.cs" />
     <Compile Include="Assets\Scripts\OtherStarMaker.cs" />
     <Compile Include="Assets\Scripts\Others.cs" />
+    <Compile Include="Assets\Scripts\Star.cs" />
+    <Compile Include="Assets\Scripts\StarMaker.cs" />
     <Compile Include="Assets\Scripts\TouchController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />

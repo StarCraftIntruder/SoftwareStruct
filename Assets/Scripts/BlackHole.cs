@@ -11,11 +11,11 @@ public class BlackHole : MonoBehaviour {
     {
         if (other.tag == "MyStar")
         {
-            starMaker.SendMessage("ereaseStar");
+            starMaker.SendMessage("ereaseStar",other.gameObject);
         }
     }
 	// Update is called once per frame
 	void Update () {
-	
+	    
 	}
 }
