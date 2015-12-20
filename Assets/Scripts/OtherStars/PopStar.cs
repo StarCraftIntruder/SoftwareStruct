@@ -33,7 +33,7 @@ public class PopStar : MonoBehaviour
 #else  
                 render.sharedMaterial = normalMat;
 #endif
-                other.gameObject.SendMessage("flip", true);
+                other.gameObject.SendMessage("reverse");
 
             }
             else

@@ -5,23 +5,28 @@ using System;
 
 public class Star : MonoBehaviour
 {
-    List<Vector2> points ;
+    List<Vector2> points;
     float screenLeft, screenRight, screenTop, screenBottom;
-    void flip(bool y)
+    void flip()
     {
-        if (y)
+        for (int i = 0; i < points.Count; ++i)
         {
-            for (int i = 0; i < points.Count; ++i)
-            {
-                points[i] = -points[i];
-            }
+            points[i] = new Vector2(-points[i].x, points[i].y);
         }
-        else
+    }
+    void reverse()
+    {
+        int total = points.Count - 1;
+        step = total - step;
+        for (int i = 0; i < points.Count>>1; ++i)
         {
-            for (int i = 0; i < points.Count; ++i)
-            {
-                points[i] = new Vector2(-points[i].x, points[i].y);
-            }
+            Vector2 tempP = points[i];
+            points[i] = points[total - i];
+            points[total - i] = tempP;
+        }
+        for (int i = 0; i < points.Count; ++i)
+        {
+            points[i] = -points[i];
         }
     }
     void setPoints(List<Vector2> points)
@@ -38,9 +43,9 @@ public class Star : MonoBehaviour
         Vector2 b_l = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 10)),
             t_r = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 10));
         screenLeft = b_l.x;
-        screenBottom = b_l.y-1f;
+        screenBottom = b_l.y - 1f;
         screenRight = t_r.x;
-        screenTop = t_r.y+1f;
+        screenTop = t_r.y + 1f;
         timeFlipStart = DateTime.Now;
     }
     void ereaseStar()
@@ -48,7 +53,7 @@ public class Star : MonoBehaviour
         StartCoroutine(destoryAfter02Sce());
         points.Clear();
         step = 0;
-        transform.parent.gameObject.SendMessage("ereaseStars",gameObject);
+        transform.parent.gameObject.SendMessage("ereaseStars", gameObject);
     }
     IEnumerator destoryAfter02Sce()
     {
@@ -75,7 +80,7 @@ public class Star : MonoBehaviour
             double timeFlip = (DateTime.Now - timeFlipStart).TotalMilliseconds;
             timeFlipStart = DateTime.Now;
             if (timeFlip > 100)
-                flip(false);
+                flip();
         }
         if (transform.position.y > screenTop || transform.position.y < screenBottom)
         {

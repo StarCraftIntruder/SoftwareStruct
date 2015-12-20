@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.SoftwareStruct.CSharp", "UnityVS.SoftwareStruct.CSharp.csproj", "{FB20E20B-0CCC-A05A-FBEB-D6592A1A36BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.SoftwareStruct.CSharp.Editor", "UnityVS.SoftwareStruct.CSharp.Editor.csproj", "{0544C75D-7AA3-8C10-CEA5-277A321B4644}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{FB20E20B-0CCC-A05A-FBEB-D6592A1A36BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB20E20B-0CCC-A05A-FBEB-D6592A1A36BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB20E20B-0CCC-A05A-FBEB-D6592A1A36BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0544C75D-7AA3-8C10-CEA5-277A321B4644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0544C75D-7AA3-8C10-CEA5-277A321B4644}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0544C75D-7AA3-8C10-CEA5-277A321B4644}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0544C75D-7AA3-8C10-CEA5-277A321B4644}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

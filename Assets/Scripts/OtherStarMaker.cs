@@ -114,13 +114,24 @@ public class OtherStarMaker : MonoBehaviour
         }
         if (childCount < 1)
         {
-            //PlayerPrefs.SetInt("card", ++card);
-            card++;
-            if (card < 3)
+            if (card < 4)
             {
+                //PlayerPrefs.SetInt("card", ++card);
+                card++;
                 initStars();
                 starMaker.SendMessage("ereaseStars");
             }
+        }
+    }
+    void setCard(int card)//选关
+    {
+        card--;
+        if (card < 4)
+        {
+            this.card = card;
+            //PlayerPrefs.SetInt("card", card);
+            initStars();
+            starMaker.SendMessage("ereaseStars");
         }
     }
 }
