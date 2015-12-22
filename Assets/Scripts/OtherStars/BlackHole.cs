@@ -8,7 +8,7 @@ public class BlackHole : MonoBehaviour
     {
         if (other.tag == "MyStar")
         {
-            other.gameObject.SendMessage("ereaseStar");
+            other.SendMessage("ereaseStar");
         }
     }
 }

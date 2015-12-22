@@ -5,13 +5,17 @@ public class PopStar : MonoBehaviour
 {
     public Material normalMat,origMat;
     Renderer render;
+    int durable,maxDur;
+    void setData(UserData data) {
+        maxDur = 2;
+    }
     void Start()
     {
         render = GetComponent<Renderer>();
     }
     void reset()
     {
-        durable = 2;
+        durable = maxDur;
         if (render != null)
         {
 #if UNITY_EDITOR
@@ -21,7 +25,6 @@ public class PopStar : MonoBehaviour
 #endif
         }
     }
-    int durable;
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "MyStar")
@@ -33,13 +36,13 @@ public class PopStar : MonoBehaviour
 #else  
                 render.sharedMaterial = normalMat;
 #endif
-                other.gameObject.SendMessage("reverse");
+                other.SendMessage("reverse");
 
             }
             else
             {
                 gameObject.SetActive(false);
-                transform.parent.parent.gameObject.SendMessage("checkIsWin");
+                transform.parent.SendMessage("checkIsWin");
             }
         }
     }

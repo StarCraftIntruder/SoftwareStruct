@@ -9,7 +9,7 @@ public class OtherStar : MonoBehaviour
         if (other.tag == "MyStar")
         {
             gameObject.SetActive(false);
-            transform.parent.parent.gameObject.SendMessage("checkIsWin");
+            transform.parent.SendMessage("checkIsWin");
         }
     }
 }

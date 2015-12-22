@@ -2,52 +2,61 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public class UserData
+{
+    public byte[] data;
+}
+
 public class OtherStarMaker : MonoBehaviour
 {
     public GameObject[] starPrefabs;
-    int need = 2;//表示小于need的是需要消灭的
+    int need = 3;//表示小于need的是需要消灭的
+    int maxCard = 4;//小于maxCard的关卡都是存在的
     enum STAR_TYPE
     {
-        Blue,//普通星球
-        Red,//弹跳星球
-        Hole,//黑洞
+        Earth,//普通星球0
+        Pop,//弹跳星球1
+        Explosion,//自爆星球2
+        Hole,//黑洞3
     };
     struct StarInfo
     {
         public Vector2 pos;
         public STAR_TYPE type;
+        public UserData userData;//放一些数据，如自爆时间、巡逻路径类型等（每种有自己的格式）
     }
 
     List<List<StarInfo>> starsInit;
+    List<Transform> crossStars, unCrossStars;
     void Awake()
     {
-        int cardCount = 10;
-        starsInit = new List<List<StarInfo>>(cardCount);
-        for (int i = 0; i < cardCount; ++i)
+        starsInit = new List<List<StarInfo>>(maxCard);
+        for (int i = 0; i < maxCard; ++i)
             starsInit.Add(new List<StarInfo>());
         #region 第一关数据
-        starsInit[0].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Blue });
-        starsInit[0].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Blue });
+        starsInit[0].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Earth });
+        starsInit[0].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Earth });
         #endregion
 
         #region 第二关数据
-        starsInit[1].Add(new StarInfo { pos = new Vector2(0, -2), type = STAR_TYPE.Blue });
+        starsInit[1].Add(new StarInfo { pos = new Vector2(0, -2), type = STAR_TYPE.Earth });
         starsInit[1].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Hole });
-        starsInit[1].Add(new StarInfo { pos = new Vector2(0, 2), type = STAR_TYPE.Blue });
+        starsInit[1].Add(new StarInfo { pos = new Vector2(0, 2), type = STAR_TYPE.Earth });
         #endregion
 
         #region 第三关数据
-        starsInit[2].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Red });
-        starsInit[2].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Red });
-        //starsInit[2].Add(new StarInfo { pos = new Vector2(0, 2), type = STAR_TYPE.Blue });
-        starsInit[2].Add(new StarInfo { pos = new Vector2(0, -2), type = STAR_TYPE.Blue });
-        //starsInit[2].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Hole });
+        starsInit[2].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Pop, userData = new UserData() });
+        starsInit[2].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Earth });
+        #endregion
+
+        #region 第四关数据
+        starsInit[3].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Explosion, userData = new UserData() });
+        starsInit[3].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Earth });
         #endregion
     }
 
     int card;
-    Transform otherStars, blackHoles;
-    GameObject starMaker;
+    Transform starMaker;
     void Start()
     {
         card = PlayerPrefs.GetInt("card", -1);
@@ -57,76 +66,74 @@ public class OtherStarMaker : MonoBehaviour
             PlayerPrefs.SetInt("card", card);//读取关卡
         }
 
-        if (card > 2)
-            print("通关了");
+        starMaker = GameObject.Find("starMaker").GetComponent<Transform>();
+        crossStars = new List<Transform>();
+        unCrossStars = new List<Transform>();
 
-        otherStars = transform.FindChild("otherStars");
-        blackHoles = transform.FindChild("blackHoles");
-
-        starMaker = GameObject.Find("starMaker");
-
-        initStars();
+        setCard(card);
     }
 
     void initStars()
     {
-        //otherStars、blackHoles分别代表需要消灭和不需要消灭的东西(典型代表是黑洞）
-        foreach (Transform t in otherStars.GetComponentsInChildren<Transform>(true))
-        {
-            if (t != otherStars)
-                Destroy(t.gameObject);
-        }
-        foreach (Transform t in blackHoles.GetComponentsInChildren<Transform>(true))
-        {
-            if (t != blackHoles)
-                Destroy(t.gameObject);
-        }
+        //crossStars、unCrossStars分别代表需要消灭和不需要消灭的东西(典型代表是黑洞）
+        foreach (Transform t in crossStars)
+            Destroy(t.gameObject);
+        crossStars.Clear();
+        foreach (Transform t in unCrossStars)
+            Destroy(t.gameObject);
+        unCrossStars.Clear();
+
         foreach (var info in starsInit[card])
         {
             GameObject g = Object.Instantiate<GameObject>(starPrefabs[(int)info.type]);
             Transform t = g.transform;
-            t.parent = (int)info.type < 2 ? otherStars : blackHoles;
+            t.parent = transform;
+            ((int)info.type < need ? crossStars : unCrossStars).Add(t);
             t.position = info.pos;
+            if (info.userData != null)
+                t.SendMessage("setData", info.userData);
         }
     }
     void resetStars()
     {
-        foreach (Transform t in otherStars.GetComponentsInChildren<Transform>(true))
+        foreach (Transform t in crossStars)
         {
-            if (t != otherStars)
-            {
-                t.gameObject.SetActive(true);
-                t.gameObject.SendMessage("reset");
-            }
+            t.gameObject.SetActive(true);
+            t.SendMessage("reset");
         }
-        foreach (Transform t in blackHoles.GetComponentsInChildren<Transform>(true))
+        foreach (Transform t in unCrossStars)
         {
-            if (t != blackHoles)
-                t.gameObject.SetActive(true);
+            t.gameObject.SetActive(true);
+            t.SendMessage("reset");
         }
     }
     void checkIsWin()
     {
-        int childCount = -1;
-        foreach (Transform t in otherStars.GetComponentsInChildren<Transform>(false))
+        bool win = true;
+        foreach (Transform t in crossStars)
         {
-            childCount++;
+            if (t.gameObject.activeSelf)
+            {
+                win = false;
+                break;
+            }
         }
-        if (childCount < 1)
+        if (win)
         {
-            if (card < 4)
+            int card = this.card + 1;
+            if (card < maxCard)
             {
                 //PlayerPrefs.SetInt("card", ++card);
-                card++;
-                initStars();
-                starMaker.SendMessage("ereaseStars");
+                setCard(card);
             }
         }
     }
     void setCard(int card)//选关
     {
-        card--;
-        if (card < 4)
+        if (card == -1) card = this.card + 1;
+        else if (card == -2) card = this.card - 1;
+
+        if (card > -1 && card < maxCard)
         {
             this.card = card;
             //PlayerPrefs.SetInt("card", card);

@@ -53,7 +53,7 @@ public class Star : MonoBehaviour
         StartCoroutine(destoryAfter02Sce());
         points.Clear();
         step = 0;
-        transform.parent.gameObject.SendMessage("ereaseStars", gameObject);
+        transform.parent.SendMessage("ereaseStar", transform);
     }
     IEnumerator destoryAfter02Sce()
     {

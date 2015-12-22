@@ -7,7 +7,7 @@ public class StarMaker : MonoBehaviour
 {
     public GameObject starPrefab;
 
-    GameObject otherStarMaker;
+    Transform otherStarMaker;
     List<Vector2> points;
     void addPoint(Vector2 point)
     {
@@ -16,7 +16,7 @@ public class StarMaker : MonoBehaviour
         else
             points.Add(point);
     }
-    List<GameObject> stars = new List<GameObject>();
+    List<Transform> stars = new List<Transform>();
     void copyStar(GameObject ob)
     {
         GameObject starObj = GameObject.Instantiate<GameObject>(ob);
@@ -24,7 +24,7 @@ public class StarMaker : MonoBehaviour
         star.parent = transform;
         //怎么样怎么样
     }
-    void ereaseStar(GameObject ob)
+    void ereaseStar(Transform ob)
     {
         if (stars.Contains(ob))
             stars.Remove(ob);
@@ -33,8 +33,8 @@ public class StarMaker : MonoBehaviour
     }
     void ereaseStars()
     {
-        foreach (GameObject ob in stars)
-            Destroy(ob);
+        foreach (Transform ob in stars)
+            Destroy(ob.gameObject);
         stars.Clear();
         points = new List<Vector2>();
         otherStarMaker.SendMessage("resetStars");
@@ -45,11 +45,11 @@ public class StarMaker : MonoBehaviour
         Transform star = starObj.transform;
         star.parent = transform;
         star.position = pos;
-        starObj.SendMessage("setPoints", points);
-        stars.Add(starObj);
+        star.SendMessage("setPoints", points);
+        stars.Add(star);
     }
     void Start()
     {
-        otherStarMaker = GameObject.Find("otherStarMaker");
+        otherStarMaker = GameObject.Find("otherStarMaker").GetComponent<Transform>();
     }
 }
