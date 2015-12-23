@@ -51,7 +51,8 @@ public class OtherStarMaker : MonoBehaviour
 
         #region 第四关数据
         starsInit[3].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Explosion, userData = new UserData() });
-        starsInit[3].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Earth });
+        starsInit[3].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Earth });
+        starsInit[3].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData() });
         #endregion
     }
 

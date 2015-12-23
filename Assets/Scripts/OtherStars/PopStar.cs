@@ -8,6 +8,7 @@ public class PopStar : MonoBehaviour
     int durable,maxDur;
     void setData(UserData data) {
         maxDur = 2;
+        reset();
     }
     void Start()
     {

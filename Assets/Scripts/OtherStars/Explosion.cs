@@ -9,12 +9,14 @@ public class Explosion : MonoBehaviour
     {
         maxSpeed = 0.25f;
         maxTime = 4f;
+        reset();
     }
     void reset()
     {
         time = maxTime;
         scale = 1.04f;
         speed = maxSpeed;
+        StopAllCoroutines();
         StartCoroutine(scaling());
     }
     void OnTriggerEnter(Collider other)

@@ -33,11 +33,12 @@ public class StarMaker : MonoBehaviour
     }
     void ereaseStars()
     {
+        if (stars.Count > 0)
+            otherStarMaker.SendMessage("resetStars");
         foreach (Transform ob in stars)
             Destroy(ob.gameObject);
         stars.Clear();
         points = new List<Vector2>();
-        otherStarMaker.SendMessage("resetStars");
     }
     void makeStar(Vector2 pos)
     {
