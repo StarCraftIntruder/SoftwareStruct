@@ -31,9 +31,9 @@ public class StarMaker : MonoBehaviour
         if (stars.Count == 0)
             otherStarMaker.SendMessage("resetStars");
     }
-    void ereaseStars()
+    void ereaseStars(bool reset)
     {
-        if (stars.Count > 0)
+        if (reset && stars.Count > 0)
             otherStarMaker.SendMessage("resetStars");
         foreach (Transform ob in stars)
             Destroy(ob.gameObject);

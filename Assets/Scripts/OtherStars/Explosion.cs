@@ -3,8 +3,16 @@ using System.Collections;
 
 public class Explosion : MonoBehaviour
 {
+    GameObject ball;
     float maxSpeed, maxTime;
     float time, scale, speed;
+
+    GameObject resetOb;
+    void Start()
+    {
+        ball = transform.FindChild("Ball").gameObject;
+        resetOb = GameObject.Find("starMaker");
+    }
     void setData(UserData data)
     {
         maxSpeed = 0.25f;
@@ -13,6 +21,9 @@ public class Explosion : MonoBehaviour
     }
     void reset()
     {
+        if (ball != null)
+            ball.SetActive(true);
+        tag = "alive";
         time = maxTime;
         scale = 1.04f;
         speed = maxSpeed;
@@ -23,7 +34,9 @@ public class Explosion : MonoBehaviour
     {
         if (other.tag == "MyStar")
         {
-            gameObject.SetActive(false);
+            ball.SetActive(false);
+            tag = "dead";
+            gameObject.SendMessage("explode");
             transform.parent.SendMessage("checkIsWin");
         }
     }
@@ -44,9 +57,10 @@ public class Explosion : MonoBehaviour
             speed -= 0.007f;
             yield return new WaitForSeconds(speed);
         }
-
-        print("爆炸");
-        //gameObject.SetActive(false);
+        ball.SetActive(false);
+        tag = "dead";
+        gameObject.SendMessage("explode");
+        resetOb.SendMessage("ereaseStars", false);
         yield return new WaitForSeconds(1.5f);
         transform.parent.SendMessage("resetStars");
     }

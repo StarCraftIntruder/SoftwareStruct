@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PopStar : MonoBehaviour
 {
+    GameObject ball;
     public Material normalMat,origMat;
     Renderer render;
     int durable,maxDur;
@@ -12,19 +13,22 @@ public class PopStar : MonoBehaviour
     }
     void Start()
     {
-        render = GetComponent<Renderer>();
+        ball = transform.FindChild("Ball").gameObject;
+        render = ball.GetComponent<Renderer>();
     }
     void reset()
     {
         durable = maxDur;
         if (render != null)
         {
+            ball.SetActive(true);
 #if UNITY_EDITOR
             render.material = origMat;
 #else  
         render.sharedMaterial = origMat;
 #endif
         }
+        tag = "alive";
     }
     void OnTriggerEnter(Collider other)
     {
@@ -42,7 +46,9 @@ public class PopStar : MonoBehaviour
             }
             else
             {
-                gameObject.SetActive(false);
+                ball.SetActive(false);
+                tag = "dead";
+                gameObject.SendMessage("explode");
                 transform.parent.SendMessage("checkIsWin");
             }
         }

@@ -98,22 +98,16 @@ public class OtherStarMaker : MonoBehaviour
     void resetStars()
     {
         foreach (Transform t in crossStars)
-        {
-            t.gameObject.SetActive(true);
             t.SendMessage("reset");
-        }
         foreach (Transform t in unCrossStars)
-        {
-            t.gameObject.SetActive(true);
             t.SendMessage("reset");
-        }
     }
     void checkIsWin()
     {
         bool win = true;
         foreach (Transform t in crossStars)
         {
-            if (t.gameObject.activeSelf)
+            if (t.CompareTag("alive"))
             {
                 win = false;
                 break;
@@ -121,12 +115,17 @@ public class OtherStarMaker : MonoBehaviour
         }
         if (win)
         {
-            int card = this.card + 1;
-            if (card < maxCard)
-            {
-                //PlayerPrefs.SetInt("card", ++card);
-                setCard(card);
-            }
+            StartCoroutine(delayToCard());
+        }
+    }
+    IEnumerator delayToCard()
+    {
+        yield return new WaitForSeconds(0.6f);
+        int card = this.card + 1;
+        if (card < maxCard)
+        {
+            //PlayerPrefs.SetInt("card", ++card);
+            setCard(card);
         }
     }
     void setCard(int card)//选关
@@ -139,7 +138,7 @@ public class OtherStarMaker : MonoBehaviour
             this.card = card;
             //PlayerPrefs.SetInt("card", card);
             initStars();
-            starMaker.SendMessage("ereaseStars");
+            starMaker.SendMessage("ereaseStars",true);
         }
     }
 }
