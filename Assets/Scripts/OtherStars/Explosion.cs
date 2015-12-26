@@ -46,6 +46,7 @@ public class Explosion : MonoBehaviour
         }
 
         print("爆炸");
+        //gameObject.SetActive(false);
         yield return new WaitForSeconds(1.5f);
         transform.parent.SendMessage("resetStars");
     }

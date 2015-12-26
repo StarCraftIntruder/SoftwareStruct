@@ -13,37 +13,17 @@ public class TouchController : MonoBehaviour
     {
         isTouching = false;
         starMaker = GameObject.Find("starMaker").GetComponent<Transform>();
-
-        UIEventListener ev = GetComponent<UIEventListener>();
-        ev.onPress = onPress;
-        ev.onDrag = onDrag;
     }
-
-    Vector3 firstPoint;
-    float maxDis;
-    void onPress(GameObject ob, bool state)
-    {//按下state=true、抬起state=false
-        if (state)
-        {
-            oldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10);
-            firstPoint = oldPoint;
-            starMaker.SendMessage("ereaseStars");
-            StartCoroutine(pauseOneSec(oldPoint));
-            isTouching = true;
-            maxDis = 0;
-        }
-        else
-        {
-            if (isTouching)
-            {
-                if (maxDis < 1f)//如果滑动距离太小，则移除
-                    starMaker.SendMessage("ereaseStars");
-            }
-            isTouching = false;
-        }
+    void OnMouseDown()
+    {
+        oldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10);
+        firstPoint = oldPoint;
+        starMaker.SendMessage("ereaseStars");
+        StartCoroutine(pauseOneSec(oldPoint));
+        isTouching = true;
+        maxDis = 0;
     }
-
-    void onDrag(GameObject ob, Vector2 point)
+    void OnMouseDrag()
     {
         if (isTouching)
         {
@@ -56,6 +36,17 @@ public class TouchController : MonoBehaviour
                 maxDis = dis;
         }
     }
+    void OnMouseExit()
+    {
+        if (isTouching)
+        {
+            if (maxDis < 1f)//如果滑动距离太小，则移除
+                starMaker.SendMessage("ereaseStars");
+        }
+        isTouching = false;
+    }       
+    Vector3 firstPoint;
+    float maxDis;   
     IEnumerator pauseOneSec(Vector2 pos)
     {
         yield return new WaitForSeconds(0.3f);
