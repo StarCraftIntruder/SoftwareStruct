@@ -16,7 +16,7 @@ public class OtherStar : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "MyStar")
+        if (CompareTag("alive") && other.tag == "MyStar")
         {
             ball.SetActive(false);
             tag = "dead";

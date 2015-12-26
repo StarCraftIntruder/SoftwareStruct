@@ -32,7 +32,7 @@ public class PopStar : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "MyStar")
+        if (CompareTag("alive") && other.tag == "MyStar")
         {
             if (durable-- == 2)
             {

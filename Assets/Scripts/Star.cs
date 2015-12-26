@@ -64,10 +64,7 @@ public class Star : MonoBehaviour
     {
         if (points.Count > 0)
         {
-            if (++step >= points.Count)
-            {
-                step = 0;
-            }
+            step = (step + 1) % points.Count;
             transform.Translate(points[step]);
         }
     }

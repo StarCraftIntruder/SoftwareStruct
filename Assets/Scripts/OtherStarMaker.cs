@@ -10,13 +10,14 @@ public class UserData
 public class OtherStarMaker : MonoBehaviour
 {
     public GameObject[] starPrefabs;
-    int need = 3;//表示小于need的是需要消灭的
-    int maxCard = 4;//小于maxCard的关卡都是存在的
+    int need = 4;//表示小于need的是需要消灭的
+    int maxCard = 5;//小于maxCard的关卡都是存在的
     enum STAR_TYPE
     {
         Earth,//普通星球0
         Pop,//弹跳星球1
         Explosion,//自爆星球2
+        FixedStar,//带卫星的恒星
         Hole,//黑洞3
     };
     struct StarInfo
@@ -53,6 +54,10 @@ public class OtherStarMaker : MonoBehaviour
         starsInit[3].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Explosion, userData = new UserData() });
         starsInit[3].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Earth });
         starsInit[3].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData() });
+        #endregion
+
+        #region 第五关数据
+        starsInit[4].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.FixedStar, userData = new UserData() });
         #endregion
     }
 

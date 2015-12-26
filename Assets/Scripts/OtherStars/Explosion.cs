@@ -8,7 +8,7 @@ public class Explosion : MonoBehaviour
     float time, scale, speed;
 
     GameObject resetOb;
-    void Start()
+    void Awake()
     {
         ball = transform.FindChild("Ball").gameObject;
         resetOb = GameObject.Find("starMaker");
@@ -32,10 +32,11 @@ public class Explosion : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "MyStar")
+        if (CompareTag("alive") && other.tag == "MyStar")
         {
             ball.SetActive(false);
             tag = "dead";
+            StopAllCoroutines();
             gameObject.SendMessage("explode");
             transform.parent.SendMessage("checkIsWin");
         }
