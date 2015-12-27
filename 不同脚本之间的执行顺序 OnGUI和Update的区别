@@ -1,0 +1,9 @@
+现有2个脚本A和B，在Execution Order中将A的执行顺序放在B的前面 
+发现执行顺序如下 
+一帧内： 
+A的Update 
+B的Update 
+A的OnGUI 
+B的OnGUI 
+B的OnGUI 
+A的OnGUI 
