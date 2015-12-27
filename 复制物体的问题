@@ -1,0 +1,5 @@
+void Start () 
+ { 
+ var a = GameObject.Find("Cube"); 
+ var b = Instantiate(a,a.transform.position,a.transform.rotation); 
+ } 
