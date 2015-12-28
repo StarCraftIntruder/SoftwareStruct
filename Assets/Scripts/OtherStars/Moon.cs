@@ -9,26 +9,33 @@ public class Moon : MonoBehaviour
     bool alive;
     void setPath(UserData data)
     {
+        //reset
         step = 0;
         alive = true;
-        //data中含有type和（radius）或（a b）等
-        MOON_TYPE type = MOON_TYPE.Circle;
+        /*data格式：
+         * type int
+         * time int
+         * type=0: radius float
+         * type=1: a float,b float
+         */
+        MOON_TYPE type = (MOON_TYPE)data.readInt();
+        int time = data.readInt();//转1/4圈需要的帧数
         path.Clear();
+        float x = 0, y = 0;
         switch (type)
         {
             case MOON_TYPE.Circle:
-                float radius = 1.5f;
+                float radius = data.readFloat();
                 float r_2 = radius * radius;
-                float x = 0, y = 0;
-                for (int i = 0; i < 30; ++i)
+                for (int i = 0; i < time; ++i)
                 {
-                    x = Mathf.Lerp(0, 1.5f, i / 30f);
+                    x = radius * Mathf.Sin(i * 90.0f / time * Mathf.Deg2Rad);
                     y = Mathf.Sqrt(r_2 - x * x);
                     path.Add(new Vector2(x, y));
                 }
-                for (int i = 30; i >0; --i)
+                for (int i = time; i > 0; --i)
                 {
-                    x = Mathf.Lerp(0, 1.5f, i / 30f);
+                    x = radius * Mathf.Sin(i * 90.0f / time * Mathf.Deg2Rad);
                     y = -Mathf.Sqrt(r_2 - x * x);
                     path.Add(new Vector2(x, y));
                 }
@@ -36,9 +43,25 @@ public class Moon : MonoBehaviour
                     path.Add(-path[i]);
                 break;
             case MOON_TYPE.Ellipse:
+                float a = data.readFloat(), b = data.readFloat();
+                float a_2 = a * a, b_2 = b * b;
+                for (int i = 0; i <= time; ++i)
+                {
+                    x = a * Mathf.Sin(i * 90.0f / time * Mathf.Deg2Rad);
+                    float temp = (1 - x * x / a_2) * b_2;
+                    y = temp < 0 ? 0 : Mathf.Sqrt(temp);
+                    path.Add(new Vector2(x, y));
+                }
+                for (int i = path.Count - 1; i > 0; --i)
+                {
+                    path.Add(new Vector2(path[i].x, -path[i].y));
+                }
+                for (int i = 0; i < time * 2; ++i)
+                    path.Add(-path[i]);
                 break;
         }
         //计算轨迹
+        data.reset();
     }
     Transform ball;
     void Awake()

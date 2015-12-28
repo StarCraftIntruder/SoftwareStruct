@@ -5,13 +5,43 @@ using System.Collections.Generic;
 public class UserData
 {
     public byte[] data;
+    int cur;
+    public UserData(byte[] data)
+    {
+        this.data = data;
+        this.cur = 0;
+    }
+    public int readInt()
+    {
+        if (cur + 3 < data.Length)
+        {
+            int value = System.BitConverter.ToInt32(data, cur);
+            cur += 4;
+            return value;
+        }
+        return -1;
+    }
+    public float readFloat()
+    {
+        if (cur + 3 < data.Length)
+        {
+            float value = System.BitConverter.ToSingle(data, cur);
+            cur += 4;
+            return value;
+        }
+        return -1f;
+    }
+    public void reset()
+    {
+        cur = 0;
+    }
 }
 
 public class OtherStarMaker : MonoBehaviour
 {
     public GameObject[] starPrefabs;
     int need = 4;//表示小于need的是需要消灭的
-    int maxCard = 5;//小于maxCard的关卡都是存在的
+    int maxCard = 16;//小于maxCard的关卡都是存在的
     enum STAR_TYPE
     {
         Earth,//普通星球0
@@ -46,18 +76,101 @@ public class OtherStarMaker : MonoBehaviour
         #endregion
 
         #region 第三关数据
-        starsInit[2].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Pop, userData = new UserData() });
+        starsInit[2].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
         starsInit[2].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Earth });
         #endregion
 
         #region 第四关数据
-        starsInit[3].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Explosion, userData = new UserData() });
+        starsInit[3].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
         starsInit[3].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Earth });
-        starsInit[3].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData() });
+        starsInit[3].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
         #endregion
 
         #region 第五关数据
-        starsInit[4].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.FixedStar, userData = new UserData() });
+        starsInit[4].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
+        starsInit[4].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
+        #endregion
+
+        #region 第六关数据
+        starsInit[5].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
+        starsInit[5].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
+        starsInit[5].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        #endregion
+
+        #region 第七关数据
+        starsInit[6].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[6].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
+        starsInit[6].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
+        #endregion
+
+        #region 第八关数据
+        starsInit[7].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
+        starsInit[7].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
+        starsInit[7].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Hole });
+        #endregion
+
+        #region 第九关数据
+        starsInit[8].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[8].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Hole });
+        #endregion
+
+        #region 第十关数据
+        starsInit[9].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Hole });
+        starsInit[9].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        starsInit[9].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Earth });
+        starsInit[9].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        #endregion
+
+        #region 第十一关数据
+        starsInit[10].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[10].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        starsInit[10].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Earth });
+        starsInit[10].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        #endregion
+
+        #region 第十二关数据
+        starsInit[11].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
+        starsInit[11].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
+        starsInit[11].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Hole });
+        starsInit[11].Add(new StarInfo { pos = new Vector2(-3, -3), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[11].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Earth });
+        #endregion
+
+        #region 第十三关数据
+        starsInit[12].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        starsInit[12].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Earth });
+        starsInit[12].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        starsInit[12].Add(new StarInfo { pos = new Vector2(0, -3), type = STAR_TYPE.Hole });
+        starsInit[12].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        #endregion
+
+        #region 第十四关数据
+        starsInit[13].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
+        starsInit[13].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
+        starsInit[13].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Hole }); 
+        starsInit[13].Add(new StarInfo { pos = new Vector2(3, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        starsInit[13].Add(new StarInfo { pos = new Vector2(0, -3), type = STAR_TYPE.Earth });
+        starsInit[13].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        #endregion
+
+        #region 第十五关数据
+        starsInit[14].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
+        starsInit[14].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
+        starsInit[14].Add(new StarInfo { pos = new Vector2(-3, 3), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[14].Add(new StarInfo { pos = new Vector2(3, -3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        starsInit[14].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Earth });
+        starsInit[14].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        #endregion
+
+        #region 第十六关数据
+        starsInit[15].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
+        starsInit[15].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
+        starsInit[15].Add(new StarInfo { pos = new Vector2(-3, 3), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[15].Add(new StarInfo { pos = new Vector2(3, -3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        starsInit[15].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Earth });
+        starsInit[15].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        starsInit[15].Add(new StarInfo { pos = new Vector2(3, 3), type = STAR_TYPE.Hole });
+        starsInit[15].Add(new StarInfo { pos = new Vector2(-3, -3), type = STAR_TYPE.Hole }); 
         #endregion
     }
 
@@ -143,7 +256,7 @@ public class OtherStarMaker : MonoBehaviour
             this.card = card;
             //PlayerPrefs.SetInt("card", card);
             initStars();
-            starMaker.SendMessage("ereaseStars",true);
+            starMaker.SendMessage("ereaseStars", true);
         }
     }
 }
