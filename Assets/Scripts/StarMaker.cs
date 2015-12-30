@@ -17,12 +17,10 @@ public class StarMaker : MonoBehaviour
             points.Add(point);
     }
     List<Transform> stars = new List<Transform>();
-    void copyStar(GameObject ob)
+    void copyStar(Transform copy)
     {
-        GameObject starObj = GameObject.Instantiate<GameObject>(ob);
-        Transform star = starObj.transform;
-        star.parent = transform;
-        //怎么样怎么样
+        copy.parent = transform;
+        stars.Add(copy);
     }
     void ereaseStar(Transform ob)
     {

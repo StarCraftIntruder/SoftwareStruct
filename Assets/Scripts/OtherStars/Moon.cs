@@ -45,19 +45,23 @@ public class Moon : MonoBehaviour
             case MOON_TYPE.Ellipse:
                 float a = data.readFloat(), b = data.readFloat();
                 float a_2 = a * a, b_2 = b * b;
-                for (int i = 0; i <= time; ++i)
+                for (int i = 0; i < time; ++i)
                 {
                     x = a * Mathf.Sin(i * 90.0f / time * Mathf.Deg2Rad);
                     float temp = (1 - x * x / a_2) * b_2;
                     y = temp < 0 ? 0 : Mathf.Sqrt(temp);
                     path.Add(new Vector2(x, y));
                 }
-                for (int i = path.Count - 1; i > 0; --i)
+                for (int i = path.Count - 1; i > -1; --i)
                 {
                     path.Add(new Vector2(path[i].x, -path[i].y));
                 }
-                for (int i = 0; i < time * 2; ++i)
+                for (int i = 0; i < (time << 1); ++i)
                     path.Add(-path[i]);
+
+                Vector3 off = a > b ? new Vector2(a - b, 0) : new Vector2(0, b - a);
+                for (int i = 0; i < (time << 2); ++i)
+                    path[i] += off;
                 break;
         }
         //计算轨迹

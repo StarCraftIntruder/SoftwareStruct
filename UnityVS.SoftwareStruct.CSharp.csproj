@@ -200,6 +200,7 @@
     <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
     <Compile Include="Assets\Scripts\OtherStarMaker.cs" />
     <Compile Include="Assets\Scripts\OtherStars\BlackHole.cs" />
+    <Compile Include="Assets\Scripts\OtherStars\Crystal.cs" />
     <Compile Include="Assets\Scripts\OtherStars\Explode.cs" />
     <Compile Include="Assets\Scripts\OtherStars\Explosion.cs" />
     <Compile Include="Assets\Scripts\OtherStars\FixedStar.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Assets\Scripts\OtherStars\OtherStar.cs" />
     <Compile Include="Assets\Scripts\OtherStars\PopStar.cs" />
     <Compile Include="Assets\Scripts\OtherStars\Portal.cs" />
+    <Compile Include="Assets\Scripts\OtherStars\SelfRotate.cs" />
     <Compile Include="Assets\Scripts\Others.cs" />
     <Compile Include="Assets\Scripts\Plugins\HTExplosion.cs" />
     <Compile Include="Assets\Scripts\Star.cs" />

@@ -5,7 +5,7 @@ using System;
 
 public class Star : MonoBehaviour
 {
-    List<Vector2> points;
+    public List<Vector2> points;
     float screenLeft, screenRight, screenTop, screenBottom;
     void flip()
     {
@@ -18,7 +18,7 @@ public class Star : MonoBehaviour
     {
         int total = points.Count - 1;
         step = total - step;
-        for (int i = 0; i < points.Count>>1; ++i)
+        for (int i = 0; i < points.Count >> 1; ++i)
         {
             Vector2 tempP = points[i];
             points[i] = points[total - i];
@@ -37,7 +37,15 @@ public class Star : MonoBehaviour
     {
         points.Add(point);
     }
-    int step;
+    public int step;
+    void copyPath(Star copy)
+    {
+        points = new List<Vector2>(copy.points.Count);
+        foreach (Vector2 p in copy.points)
+            points.Add(p);
+        this.step = copy.step;
+        rotate(false);
+    }
     void Start()
     {
         Vector2 b_l = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 10)),
@@ -82,6 +90,30 @@ public class Star : MonoBehaviour
         if (transform.position.y > screenTop || transform.position.y < screenBottom)
         {
             ereaseStar();
+        }
+    }
+    void copyStar()
+    {
+        GameObject starObj = GameObject.Instantiate<GameObject>(gameObject);
+        starObj.tag = "CopyMyStar";
+        starObj.transform.position = transform.position;
+        starObj.SendMessage("copyPath", this);
+        transform.parent.SendMessage("copyStar", starObj.transform);
+
+        rotate(true);
+    }
+    void rotate(bool top)
+    {
+        //详见三角函数诱导公式
+        float ra = Mathf.Deg2Rad * (top ? 15 : -15);
+        float cos = Mathf.Cos(ra), sin = Mathf.Sin(ra);
+
+        float x, y;
+        for (int i = 0; i < points.Count; ++i)
+        {
+            x = points[i].x;
+            y = points[i].y;
+            points[i] = new Vector2(x * cos - y * sin, y * cos + x * sin);
         }
     }
 }

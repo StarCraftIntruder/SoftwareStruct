@@ -48,6 +48,7 @@ public class OtherStarMaker : MonoBehaviour
         Pop,//弹跳星球1
         Explosion,//自爆星球2
         FixedStar,//带卫星的恒星
+        Crystal,//一个变两个的星星
         Hole,//黑洞3
     };
     struct StarInfo
@@ -92,9 +93,10 @@ public class OtherStarMaker : MonoBehaviour
         #endregion
 
         #region 第六关数据
-        starsInit[5].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
-        starsInit[5].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
-        starsInit[5].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
+        starsInit[5].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Crystal });
+        starsInit[5].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Earth });
+        starsInit[5].Add(new StarInfo { pos = new Vector2(3, -1.3f), type = STAR_TYPE.Earth });
+        starsInit[5].Add(new StarInfo { pos = new Vector2(3, 1.3f), type = STAR_TYPE.Earth });
         #endregion
 
         #region 第七关数据
