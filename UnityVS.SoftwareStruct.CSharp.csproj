@@ -204,6 +204,7 @@
     <Compile Include="Assets\NGUI\Scripts\UI\UITexture.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
+    <Compile Include="Assets\Scripts\CameraRotation.cs" />
     <Compile Include="Assets\Scripts\GuiTextDebug.cs" />
     <Compile Include="Assets\Scripts\OtherStarMaker.cs" />
     <Compile Include="Assets\Scripts\OtherStars\Ball.cs" />
