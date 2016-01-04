@@ -210,7 +210,7 @@ public class OtherStarMaker : MonoBehaviour
             Transform t = g.transform;
             t.parent = transform;
             ((int)info.type < need ? crossStars : unCrossStars).Add(t);
-            t.position = info.pos;
+            t.localPosition = info.pos;
             if (info.userData != null)
                 t.SendMessage("setData", info.userData);
         }

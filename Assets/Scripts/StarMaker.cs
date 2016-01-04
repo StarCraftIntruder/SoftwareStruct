@@ -43,7 +43,7 @@ public class StarMaker : MonoBehaviour
         GameObject starObj = GameObject.Instantiate<GameObject>(starPrefab);
         Transform star = starObj.transform;
         star.parent = transform;
-        star.position = pos;
+        star.localPosition = pos;
         star.SendMessage("setPoints", points);
         stars.Add(star);
     }

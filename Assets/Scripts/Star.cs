@@ -73,21 +73,21 @@ public class Star : MonoBehaviour
         if (points.Count > 0)
         {
             step = (step + 1) % points.Count;
-            transform.Translate(points[step]);
+            transform.Translate(points[step],Space.Self);
         }
     }
     DateTime timeFlipStart;
     void LateUpdate()
     {
         //碰到两边反弹
-        if (transform.position.x >= screenRight || transform.position.x <= screenLeft)
+        if (transform.localPosition.x >= screenRight || transform.localPosition.x <= screenLeft)
         {
             double timeFlip = (DateTime.Now - timeFlipStart).TotalMilliseconds;
             timeFlipStart = DateTime.Now;
             if (timeFlip > 100)
                 flip();
         }
-        if (transform.position.y > screenTop || transform.position.y < screenBottom)
+        if (transform.localPosition.y > screenTop || transform.localPosition.y < screenBottom)
         {
             ereaseStar();
         }
@@ -96,7 +96,7 @@ public class Star : MonoBehaviour
     {
         GameObject starObj = GameObject.Instantiate<GameObject>(gameObject);
         starObj.tag = "CopyMyStar";
-        starObj.transform.position = transform.position;
+        starObj.transform.localPosition = transform.localPosition;
         starObj.SendMessage("copyPath", this);
         transform.parent.SendMessage("copyStar", starObj.transform);
 
