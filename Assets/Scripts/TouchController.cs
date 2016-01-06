@@ -95,11 +95,14 @@ public class TouchController : MonoBehaviour
                         float dis = Vector2.Distance(oldPoint, firstPoint);
                         if (dis > maxDis)
                             maxDis = dis;
-                        if (Physics.RaycastAll(Camera.main.ScreenPointToRay(touch.position), 50f).Length > 1)
-                        {
-                            if (maxDis < 1f)//如果滑动距离太小，则移除
-                                starMaker.SendMessage("ereaseStars", true);
-                            isTouching = false;
+                        RaycastHit[] hits=Physics.RaycastAll(Camera.main.ScreenPointToRay(touch.position), 50f);
+                        foreach(RaycastHit hit in hits){
+                            if (hit.transform.CompareTag("OtherStar"))
+                            {
+                                if (maxDis < 1f)//如果滑动距离太小，则移除
+                                    starMaker.SendMessage("ereaseStars", true);
+                                isTouching = false;
+                            }
                         }
                     }
                     break;

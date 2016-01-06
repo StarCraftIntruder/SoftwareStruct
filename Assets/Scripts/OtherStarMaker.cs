@@ -77,7 +77,7 @@ public class OtherStarMaker : MonoBehaviour
         #endregion
 
         #region 第三关数据
-        starsInit[2].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[2].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Pop });
         starsInit[2].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Earth });
         #endregion
 
@@ -100,7 +100,7 @@ public class OtherStarMaker : MonoBehaviour
         #endregion
 
         #region 第七关数据
-        starsInit[6].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[6].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Pop });
         starsInit[6].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
         starsInit[6].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
         #endregion
@@ -112,7 +112,7 @@ public class OtherStarMaker : MonoBehaviour
         #endregion
 
         #region 第九关数据
-        starsInit[8].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[8].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Pop });
         starsInit[8].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Hole });
         #endregion
 
@@ -124,7 +124,7 @@ public class OtherStarMaker : MonoBehaviour
         #endregion
 
         #region 第十一关数据
-        starsInit[10].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[10].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Pop });
         starsInit[10].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
         starsInit[10].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Earth });
         starsInit[10].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
@@ -134,7 +134,7 @@ public class OtherStarMaker : MonoBehaviour
         starsInit[11].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
         starsInit[11].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
         starsInit[11].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Hole });
-        starsInit[11].Add(new StarInfo { pos = new Vector2(-3, -3), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[11].Add(new StarInfo { pos = new Vector2(-3, -3), type = STAR_TYPE.Pop });
         starsInit[11].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Earth });
         #endregion
 
@@ -143,13 +143,13 @@ public class OtherStarMaker : MonoBehaviour
         starsInit[12].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Earth });
         starsInit[12].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
         starsInit[12].Add(new StarInfo { pos = new Vector2(0, -3), type = STAR_TYPE.Hole });
-        starsInit[12].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[12].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Pop });
         #endregion
 
         #region 第十四关数据
         starsInit[13].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
         starsInit[13].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
-        starsInit[13].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Hole }); 
+        starsInit[13].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Hole });
         starsInit[13].Add(new StarInfo { pos = new Vector2(3, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
         starsInit[13].Add(new StarInfo { pos = new Vector2(0, -3), type = STAR_TYPE.Earth });
         starsInit[13].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
@@ -158,7 +158,7 @@ public class OtherStarMaker : MonoBehaviour
         #region 第十五关数据
         starsInit[14].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
         starsInit[14].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
-        starsInit[14].Add(new StarInfo { pos = new Vector2(-3, 3), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[14].Add(new StarInfo { pos = new Vector2(-3, 3), type = STAR_TYPE.Pop });
         starsInit[14].Add(new StarInfo { pos = new Vector2(3, -3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
         starsInit[14].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Earth });
         starsInit[14].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
@@ -167,12 +167,12 @@ public class OtherStarMaker : MonoBehaviour
         #region 第十六关数据
         starsInit[15].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
         starsInit[15].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
-        starsInit[15].Add(new StarInfo { pos = new Vector2(-3, 3), type = STAR_TYPE.Pop, userData = new UserData(new byte[] { 0 }) });
+        starsInit[15].Add(new StarInfo { pos = new Vector2(-3, 3), type = STAR_TYPE.Pop });
         starsInit[15].Add(new StarInfo { pos = new Vector2(3, -3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
         starsInit[15].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Earth });
         starsInit[15].Add(new StarInfo { pos = new Vector2(0, 3), type = STAR_TYPE.Explosion, userData = new UserData(new byte[] { 0 }) });
         starsInit[15].Add(new StarInfo { pos = new Vector2(3, 3), type = STAR_TYPE.Hole });
-        starsInit[15].Add(new StarInfo { pos = new Vector2(-3, -3), type = STAR_TYPE.Hole }); 
+        starsInit[15].Add(new StarInfo { pos = new Vector2(-3, -3), type = STAR_TYPE.Hole });
         #endregion
     }
 

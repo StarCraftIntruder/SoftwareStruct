@@ -6,4 +6,8 @@ public class Ball : MonoBehaviour {
     {
         transform.parent.SendMessage("OnTriggerEnter",other);
     }
+    void OnTriggerExit(Collider other)
+    {
+        transform.parent.SendMessage("OnTriggerExit", other);
+    }
 }

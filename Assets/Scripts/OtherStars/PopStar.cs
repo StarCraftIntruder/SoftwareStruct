@@ -6,11 +6,7 @@ public class PopStar : MonoBehaviour
     GameObject ball;
     public Material normalMat,origMat;
     Renderer render;
-    int durable,maxDur;
-    void setData(UserData data) {
-        maxDur = 2;
-        reset();
-    }
+    bool poped;//是否被撞过了
     void Start()
     {
         ball = transform.FindChild("Ball").gameObject;
@@ -18,7 +14,7 @@ public class PopStar : MonoBehaviour
     }
     void reset()
     {
-        durable = maxDur;
+        poped = false;
         if (render != null)
         {
             ball.SetActive(true);
@@ -34,7 +30,7 @@ public class PopStar : MonoBehaviour
     {
         if (CompareTag("alive") && other.tag == "MyStar")
         {
-            if (durable-- == 2)
+            if (!poped)
             {
 #if UNITY_EDITOR
                 render.material = normalMat;
@@ -42,7 +38,7 @@ public class PopStar : MonoBehaviour
                 render.sharedMaterial = normalMat;
 #endif
                 other.SendMessage("reverse");
-
+                poped = true;
             }
             else
             {
@@ -53,4 +49,6 @@ public class PopStar : MonoBehaviour
             }
         }
     }
+    void OnTriggerExit(Collider other)
+    {}
 }
