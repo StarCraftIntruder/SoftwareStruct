@@ -10,9 +10,7 @@ public class Star : MonoBehaviour
     void flip()
     {
         for (int i = 0; i < points.Count; ++i)
-        {
             points[i] = new Vector2(-points[i].x, points[i].y);
-        }
     }
     void reverse()
     {
@@ -23,10 +21,6 @@ public class Star : MonoBehaviour
             Vector2 tempP = points[i];
             points[i] = points[total - i];
             points[total - i] = tempP;
-        }
-        for (int i = 0; i < points.Count; ++i)
-        {
-            points[i] = -points[i];
         }
     }
     void setPoints(List<Vector2> points)
@@ -73,7 +67,7 @@ public class Star : MonoBehaviour
         if (points.Count > 0)
         {
             step = (step + 1) % points.Count;
-            transform.Translate(points[step],Space.Self);
+            transform.Translate(points[step], Space.Self);
         }
     }
     DateTime timeFlipStart;
@@ -92,6 +86,34 @@ public class Star : MonoBehaviour
             ereaseStar();
         }
     }
+    void popStar(Vector3 r)//参数为圆心
+    {
+        //Vector2 v1 = (Vector2)(r - transform.position);
+        //v1 = rotate(v1, Mathf.Deg2Rad * 90f);
+        //Vector2 v2 = points[step];
+        //float cos = Mathf.Cos( Vector2.Angle(v1,v2));
+        //float cos_2 = 2 * cos * cos - 1;
+        //float angel = Mathf.Acos(cos_2);
+        //print(angel*Mathf.Rad2Deg);
+        //reverse();
+        //for (int i = 0; i < points.Count; ++i)
+        //{
+        //    points[i] = rotate(points[i], angel);
+        //}
+
+        reverse();
+        Vector2 v1 = (Vector2)(transform.position - r);//关于v1对称  2v1-v
+        Vector2 v2 = points[step];
+        ////v1 = v1.normalized * (v2.magnitude * (v1.x * v2.x + v1.y * v2.y) / v1.magnitude / v2.magnitude);
+        //print((v1.x * v2.x + v1.y * v2.y) / v1.magnitude/v2.magnitude);
+        //Vector2.Reflect
+        //v1 = v1.normalized * (v1.x * v2.x + v1.y * v2.y) / v1.magnitude;
+
+
+        for (int i = 0; i < points.Count; ++i)
+            points[i] =   Vector2.Reflect(points[i],v1.normalized); //v1 - points[i] + v1;
+    }
+
     void copyStar()
     {
         GameObject starObj = GameObject.Instantiate<GameObject>(gameObject);
@@ -102,18 +124,24 @@ public class Star : MonoBehaviour
 
         rotate(true);
     }
-    void rotate(bool top)
+
+    Vector2 rotate(Vector2 v, float angle)
     {
         //详见三角函数诱导公式
-        float ra = Mathf.Deg2Rad * (top ? 15 : -15);
-        float cos = Mathf.Cos(ra), sin = Mathf.Sin(ra);
+        float cos = Mathf.Cos(angle), sin = Mathf.Sin(angle);
 
         float x, y;
+        x = v.x;
+        y = v.y;
+        return new Vector2(x * cos - y * sin, y * cos + x * sin);
+    }
+
+    void rotate(bool top)
+    {
+        float ra = Mathf.Deg2Rad * (top ? 15 : -15);
         for (int i = 0; i < points.Count; ++i)
         {
-            x = points[i].x;
-            y = points[i].y;
-            points[i] = new Vector2(x * cos - y * sin, y * cos + x * sin);
+            points[i] = rotate(points[i], ra);
         }
     }
 }

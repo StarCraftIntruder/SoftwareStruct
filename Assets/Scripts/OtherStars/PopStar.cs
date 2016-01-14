@@ -37,7 +37,7 @@ public class PopStar : MonoBehaviour
 #else  
                 render.sharedMaterial = normalMat;
 #endif
-                other.SendMessage("reverse");
+                other.SendMessage("popStar",transform.position);
                 poped = true;
             }
             else

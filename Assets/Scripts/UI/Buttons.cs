@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ButtonsBC : MonoBehaviour {
+public class Buttons : MonoBehaviour {
     UIEventListener [] buttons;
 	void Start () {
         buttons = transform.GetComponentsInChildren<UIEventListener>();

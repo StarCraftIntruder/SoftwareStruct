@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Analytics">
       <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>
@@ -207,7 +201,6 @@
     <Compile Include="Assets\Scripts\CameraRotation.cs" />
     <Compile Include="Assets\Scripts\GuiTextDebug.cs" />
     <Compile Include="Assets\Scripts\OtherStarMaker.cs" />
-    <Compile Include="Assets\Scripts\OtherStars\Ball.cs" />
     <Compile Include="Assets\Scripts\OtherStars\BlackHole.cs" />
     <Compile Include="Assets\Scripts\OtherStars\Crystal.cs" />
     <Compile Include="Assets\Scripts\OtherStars\Explode.cs" />
@@ -223,8 +216,7 @@
     <Compile Include="Assets\Scripts\Star.cs" />
     <Compile Include="Assets\Scripts\StarMaker.cs" />
     <Compile Include="Assets\Scripts\TouchController.cs" />
-    <Compile Include="Assets\Scripts\UI\ButtonsBC.cs" />
-    <Compile Include="Assets\Scripts\UI\ButtonsBR.cs" />
+    <Compile Include="Assets\Scripts\UI\Buttons.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
