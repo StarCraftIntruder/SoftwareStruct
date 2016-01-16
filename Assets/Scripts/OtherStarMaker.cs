@@ -98,15 +98,15 @@ public class OtherStarMaker : MonoBehaviour
 
 
 
-      //  starsInit[4].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
-      //  starsInit[4].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
+        //  starsInit[4].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 192, 63 }) });
+        //  starsInit[4].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
 
         //第六关
         starsInit[5].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Crystal });
         starsInit[5].Add(new StarInfo { pos = new Vector2(-3, 0), type = STAR_TYPE.Earth });
         starsInit[5].Add(new StarInfo { pos = new Vector2(3, -1.3f), type = STAR_TYPE.Earth });
         starsInit[5].Add(new StarInfo { pos = new Vector2(3, 1.3f), type = STAR_TYPE.Earth });
-       
+
 
         // 第七关
         starsInit[6].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Pop });
@@ -127,25 +127,14 @@ public class OtherStarMaker : MonoBehaviour
         #endregion
     }
 
-    int card;
     Transform starMaker;
     void Start()
     {
-        card = PlayerPrefs.GetInt("card", -1);
-        if (card == -1)
-        {
-            card = 0;
-            PlayerPrefs.SetInt("card", card);//读取关卡
-        }
-
         starMaker = GameObject.Find("starMaker").GetComponent<Transform>();
         crossStars = new List<Transform>();
         unCrossStars = new List<Transform>();
-
-        setCard(card);
     }
-
-    void initStars()
+    void removeAll()
     {
         //crossStars、unCrossStars分别代表需要消灭和不需要消灭的东西(典型代表是黑洞）
         foreach (Transform t in crossStars)
@@ -154,8 +143,13 @@ public class OtherStarMaker : MonoBehaviour
         foreach (Transform t in unCrossStars)
             Destroy(t.gameObject);
         unCrossStars.Clear();
+        starMaker.SendMessage("ereaseStars", false);
+    }
 
-        foreach (var info in starsInit[card])
+    void initStars()
+    {
+        removeAll();
+        foreach (var info in starsInit[Global.card])
         {
             GameObject g = Object.Instantiate<GameObject>(starPrefabs[(int)info.type]);
             Transform t = g.transform;
@@ -192,24 +186,21 @@ public class OtherStarMaker : MonoBehaviour
     IEnumerator delayToCard()
     {
         yield return new WaitForSeconds(0.6f);
-        int card = this.card + 1;
-        if (card < maxCard)
-        {
-            //PlayerPrefs.SetInt("card", ++card);
-            setCard(card);
-        }
+        setCard(1);
     }
-    void setCard(int card)//选关
+    void setCard(int plus)//plus 可为-1,0,1，分别表示上一关、不变和下一关
     {
-        if (card == -1) card = this.card + 1;
-        else if (card == -2) card = this.card - 1;
-
+        int card = Global.card + plus;
         if (card > -1 && card < maxCard)
         {
-            this.card = card;
+            Global.card = card;
             //PlayerPrefs.SetInt("card", card);
             initStars();
             starMaker.SendMessage("ereaseStars", true);
+        }
+        else
+        {
+            //通关了
         }
     }
 }

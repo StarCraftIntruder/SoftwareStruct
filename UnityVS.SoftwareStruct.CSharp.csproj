@@ -199,6 +199,7 @@
     <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
     <Compile Include="Assets\Scripts\CameraRotation.cs" />
+    <Compile Include="Assets\Scripts\Global.cs" />
     <Compile Include="Assets\Scripts\GuiTextDebug.cs" />
     <Compile Include="Assets\Scripts\OtherStarMaker.cs" />
     <Compile Include="Assets\Scripts\OtherStars\BlackHole.cs" />
@@ -210,13 +211,15 @@
     <Compile Include="Assets\Scripts\OtherStars\OtherStar.cs" />
     <Compile Include="Assets\Scripts\OtherStars\PopStar.cs" />
     <Compile Include="Assets\Scripts\OtherStars\Portal.cs" />
+    <Compile Include="Assets\Scripts\OtherStars\Portals.cs" />
     <Compile Include="Assets\Scripts\OtherStars\SelfRotate.cs" />
-    <Compile Include="Assets\Scripts\Others.cs" />
     <Compile Include="Assets\Scripts\Plugins\HTExplosion.cs" />
     <Compile Include="Assets\Scripts\Star.cs" />
     <Compile Include="Assets\Scripts\StarMaker.cs" />
     <Compile Include="Assets\Scripts\TouchController.cs" />
+    <Compile Include="Assets\Scripts\UI\AudioBtn.cs" />
     <Compile Include="Assets\Scripts\UI\Buttons.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />

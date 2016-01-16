@@ -155,6 +155,9 @@ public class HTExplosion : MonoBehaviour {
 		}
 		
 		GetComponent<Renderer>().enabled = false;
+
+        if (Global.audioOn)
+            soundEffect.Play();
 	}
 	
 	// Use this for initialization
