@@ -50,6 +50,7 @@ public class OtherStarMaker : MonoBehaviour
         FixedStar,//带卫星的恒星
         Crystal,//一个变两个的星星
         Hole,//黑洞3
+        Portal//传送门
     };
     struct StarInfo
     {
@@ -123,6 +124,8 @@ public class OtherStarMaker : MonoBehaviour
         starsInit[8].Add(new StarInfo { pos = new Vector2(3, 0), type = STAR_TYPE.FixedStar, userData = new UserData(new byte[] { 1, 0, 0, 0, 35, 0, 0, 0, 154, 153, 153, 63, 0, 0, 0, 64 }) });
         starsInit[8].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Hole });
 
+        //第十关
+        starsInit[9].Add(new StarInfo { pos = new Vector2(0, 0), type = STAR_TYPE.Portal });
 
         #endregion
     }
@@ -163,9 +166,9 @@ public class OtherStarMaker : MonoBehaviour
     void resetStars()
     {
         foreach (Transform t in crossStars)
-            t.SendMessage("reset");
+            t.SendMessage("reset",SendMessageOptions.DontRequireReceiver);
         foreach (Transform t in unCrossStars)
-            t.SendMessage("reset");
+            t.SendMessage("reset", SendMessageOptions.DontRequireReceiver);
     }
     void checkIsWin()
     {
@@ -180,6 +183,7 @@ public class OtherStarMaker : MonoBehaviour
         }
         if (win)
         {
+            starMaker.SendMessage("ereaseStars", false);
             StartCoroutine(delayToCard());
         }
     }
@@ -194,9 +198,9 @@ public class OtherStarMaker : MonoBehaviour
         if (card > -1 && card < maxCard)
         {
             Global.card = card;
-            //PlayerPrefs.SetInt("card", card);
+            PlayerPrefs.SetInt("card", card);
             initStars();
-            starMaker.SendMessage("ereaseStars", true);
+            resetStars();
         }
         else
         {

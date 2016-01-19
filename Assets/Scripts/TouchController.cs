@@ -97,7 +97,7 @@ public class TouchController : MonoBehaviour
                             maxDis = dis;
                         RaycastHit[] hits=Physics.RaycastAll(Camera.main.ScreenPointToRay(touch.position), 50f);
                         foreach(RaycastHit hit in hits){
-                            if (hit.transform.CompareTag("OtherStar"))
+                            if (hit.transform.CompareTag("alive"))
                             {
                                 if (maxDis < 1f)//如果滑动距离太小，则移除
                                     starMaker.SendMessage("ereaseStars", true);
@@ -122,7 +122,7 @@ public class TouchController : MonoBehaviour
     float maxDis;
     IEnumerator pauseOneSec(Vector2 pos)
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         starMaker.SendMessage("makeStar", (Vector2)pos);
     }
 }

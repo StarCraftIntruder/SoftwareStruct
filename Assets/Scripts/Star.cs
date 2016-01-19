@@ -16,12 +16,15 @@ public class Star : MonoBehaviour
     {
         int total = points.Count - 1;
         step = total - step;
-        for (int i = 0; i < points.Count >> 1; ++i)
+        int halfCount=points.Count>>1;
+        for (int i = 0; i < halfCount; ++i)
         {
-            Vector2 tempP = points[i];
-            points[i] = points[total - i];
+            Vector2 tempP = -points[i];
+            points[i] = -points[total - i];
             points[total - i] = tempP;
         }
+        if ((halfCount) << 1 != points.Count)
+            points[halfCount] = -points[halfCount];
     }
     void setPoints(List<Vector2> points)
     {
@@ -86,7 +89,7 @@ public class Star : MonoBehaviour
             ereaseStar();
         }
     }
-    void popStar(Vector3 r)//参数为圆心
+    void popStar(Vector3 n)//参数为法线
     {
         //Vector2 v1 = (Vector2)(r - transform.position);
         //v1 = rotate(v1, Mathf.Deg2Rad * 90f);
@@ -101,17 +104,18 @@ public class Star : MonoBehaviour
         //    points[i] = rotate(points[i], angel);
         //}
 
-        reverse();
-        Vector2 v1 = (Vector2)(transform.position - r);//关于v1对称  2v1-v
-        Vector2 v2 = points[step];
+        //reverse();
+       // Vector2 v1 = (Vector2)(transform.position - r);//关于v1对称  2v1-v
+        //Vector2 v2 = points[step];
         ////v1 = v1.normalized * (v2.magnitude * (v1.x * v2.x + v1.y * v2.y) / v1.magnitude / v2.magnitude);
         //print((v1.x * v2.x + v1.y * v2.y) / v1.magnitude/v2.magnitude);
         //Vector2.Reflect
         //v1 = v1.normalized * (v1.x * v2.x + v1.y * v2.y) / v1.magnitude;
-
+        //以上内容推了好久~舍不得删~~
 
         for (int i = 0; i < points.Count; ++i)
-            points[i] =   Vector2.Reflect(points[i],v1.normalized); //v1 - points[i] + v1;
+            points[i] = Vector2.Reflect(points[i], n); 
+            //points[i] =   Vector2.Reflect(points[i],v1.normalized); //v1 - points[i] + v1;
     }
 
     void copyStar()

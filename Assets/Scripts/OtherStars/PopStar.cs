@@ -37,7 +37,7 @@ public class PopStar : MonoBehaviour
 #else  
                 render.sharedMaterial = normalMat;
 #endif
-                other.SendMessage("popStar",transform.position);
+                other.SendMessage("reverse");
                 poped = true;
             }
             else
@@ -49,6 +49,4 @@ public class PopStar : MonoBehaviour
             }
         }
     }
-    void OnTriggerExit(Collider other)
-    {}
 }
